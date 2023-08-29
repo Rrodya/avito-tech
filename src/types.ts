@@ -28,3 +28,18 @@ export interface Screenshot {
     id:    number;
     image: string;
 }
+
+export interface IFilter {
+    id: number;
+    name: string;
+    type?: string;
+}
+
+export interface IFilterItems {
+    category: IFilter[];
+    platform: IFilter[];
+    tag: IFilter[];
+}
+
+export type sorting = "release-date" | "popularity" | "alphabetical";
+
