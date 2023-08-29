@@ -1,19 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  theme: {
-    screens: {
-      li: "350px",
-      sm: "480px",
-      md: "768px",
-      tables: "960px",
-      desktop: "1248px",
-    },
-    colors: {
-      white: "#ffffff",
+const { colors: defaultColors } = require("tailwindcss/defaultTheme");
+
+const colors = {
+  ...defaultColors,
+  ...{
+    white: "#ffffff",
       "main-white": "#f3e6e6",
       "dark-blue": "#171634",
       "dark-bluel": "#1f1e44",
@@ -34,6 +26,20 @@ module.exports = {
       "purple-three": "#cdc1ff",
       "purple-four": "#8b7bde",
       "purple-five": "#7371fc"
+  }
+}
+
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    screens: {
+      li: "350px",
+      sm: "480px",
+      md: "768px",
+      tables: "960px",
+      desktop: "1248px",
     },
     boxShadow: {
       sm: "0, 2px 4px 0px rgba(11.10.55.15)",

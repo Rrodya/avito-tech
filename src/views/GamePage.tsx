@@ -2,7 +2,7 @@ import React from "react";
 
 export function GamePage() {
   return (
-    <div className="full-container">
+    <div className="">
       GamePage
     </div>
   )

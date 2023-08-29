@@ -9,10 +9,12 @@ function App() {
   return (
     <>
       <Header/>
-      <Routes>
-        <Route path="/" element={<HomePage/>}></Route>
-        <Route path="/:id" element={<GamePage/>}></Route>
-      </Routes>
+      <div className='container mx-auto py-4'>
+        <Routes>
+          <Route path="/" element={<HomePage/>}></Route>
+          <Route path="/:id" element={<GamePage/>}></Route>
+        </Routes>
+        </div>
     </>
   );
 }

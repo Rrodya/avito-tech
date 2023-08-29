@@ -39,7 +39,7 @@
     @apply text-sm font-normal
   }
 
-  p {
+  /* p {
     @apply text-xs font-normal text-purple-four
-  }
+  } */
 }
