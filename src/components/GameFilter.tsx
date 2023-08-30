@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {IFilter, IFilterItems} from "../types";
-import { log } from "console";
 import { EnumFilter } from "../enums";
 type FilterProps = { filter: IFilterItems, makeFiltration: (selectedFilter: IFilter[]) => void }
 
@@ -71,7 +70,7 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
       </div>
 
       {isDrop &&
-        <div className="absolute w-full bg-slate-500 shadow-md p-3">
+        <div className="absolute w-full bg-slate-500 shadow-md p-3 z-10">
           {
             Object.entries(filter).map(([key, filterItems]) => (
               <div key={key}>

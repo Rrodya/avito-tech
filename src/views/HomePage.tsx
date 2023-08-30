@@ -18,28 +18,17 @@ export function HomePage() {
   
   const makeFiltration = (selectedFilter: IFilter[]) => {
 
-
-    // const options = {
-    //   method: 'GET',
-    //   url: 'https://free-to-play-games-database.p.rapidapi.com/api/filter',
-    //   params: {},
-    //   headers: {
-    //     'X-RapidAPI-Key': 'e764877f20mshdd63dd89f438712p1217cfjsn0e67f0d64b31',
-    //     'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-    //   }
-    // };
-
-    // if (selectedFilter.length === 0) {
-    //   // Directly call the URL without any params
-    //   axios.request(options)
-    //     .then(response => {
-    //       // Handle your response here
-    //     })
-    //     .catch(error => {
-    //       // Handle error
-    //     });
-    //   return;
-    // }
+    if (selectedFilter.length === 0) {
+      // Directly call the URL without any params
+      axios.get("/games")
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          // Handle error
+        });
+      return;
+    }
 
     // Filter out categories and platforms based on your conditions
     const categories = selectedFilter
@@ -66,25 +55,14 @@ export function HomePage() {
       params["tag"] = tags;
     }
 
-    // const url = "https://free-to-play-games-database.p.rapidapi.com/api/games";
 
-    const options = {
-      method: 'GET',
-      url: 'https://example.com',
-      params: params,
-      headers: {
-        'X-RapidAPI-Key': 'e764877f20mshdd63dd89f438712p1217cfjsn0e67f0d64b31',
-        'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-      }
-    };
-
-    // axios.request(options)
-    //   .then(response => {
-    //     // Handle your response here
-    //   })
-    //   .catch(error => {
-    //     // Handle error
-    //   });
+    axios.get("/games", {params})
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        // Handle error
+      });
   }
   return (
     <div className="">
