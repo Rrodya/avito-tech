@@ -10,7 +10,7 @@ export interface IGame {
     platform:                    string;
     publisher:                   string;
     developer:                   string;
-    release_date:                string | Date;
+    release_date:                string;
     freetogame_profile_url:      string;
     minimum_system_requirements?:MinimumSystemRequirements;
     screenshots?:                Screenshot[];

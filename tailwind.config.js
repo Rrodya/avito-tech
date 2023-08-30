@@ -50,6 +50,7 @@ module.exports = {
       sm: ["16px", { lineHeight: "28px", letterSpacing: "-0.03em" }],
       lg: ["18px", { lineHeight: "28px", letterSpacing: "-0.03em" }],
       "2lg": ["24px", { lineHeight: "28px", letterSpacing: "-0.03em" }],
+      xl: ["28px", { lineHeight: "28px", letterSpacing: "-0.03em" }],
       "2xl": ["36px", { lineHeight: "48px", letterSpacing: "-0.032em" }],
       "3xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.032em" }],
       "4xl": ["56px", { lineHeight: "64px", letterSpacing: "-0.032em" }],

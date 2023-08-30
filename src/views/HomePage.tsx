@@ -1,7 +1,9 @@
 import React, {useState} from "react";
 import { GameFilter } from "../components/GameFilter";
 import {filter} from "../initValues";
-import {IFilter, IFilterItems} from "../types";
+import {IFilter, IFilterItems, IGame} from "../types";
+import { games } from "../data/data";
+import { GameCard } from "../components/GameCard";
 import axios from "axios";
 
 const filtration: IFilterItems = {
@@ -11,9 +13,11 @@ const filtration: IFilterItems = {
 }
 
 export function HomePage() {
-  const [filtration, setFiltration] = useState(null)
-
+  const [filtration, setFiltration] = useState<IFilterItems[]>([])
+  // const [games, setGames] = useState<IGame[]>([])
+  
   const makeFiltration = (selectedFilter: IFilter[]) => {
+
 
     // const options = {
     //   method: 'GET',
@@ -62,10 +66,11 @@ export function HomePage() {
       params["tag"] = tags;
     }
 
+    // const url = "https://free-to-play-games-database.p.rapidapi.com/api/games";
 
     const options = {
       method: 'GET',
-      url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
+      url: 'https://example.com',
       params: params,
       headers: {
         'X-RapidAPI-Key': 'e764877f20mshdd63dd89f438712p1217cfjsn0e67f0d64b31',
@@ -73,18 +78,21 @@ export function HomePage() {
       }
     };
 
-    axios.request(options)
-      .then(response => {
-        // Handle your response here
-      })
-      .catch(error => {
-        // Handle error
-      });
+    // axios.request(options)
+    //   .then(response => {
+    //     // Handle your response here
+    //   })
+    //   .catch(error => {
+    //     // Handle error
+    //   });
   }
   return (
     <div className="">
       <h1 className="text-2lg text-slate-600">Список игр</h1>
       <GameFilter filter={filter} makeFiltration={makeFiltration}/>
+      <div className="grid md:grid-cols-3 gap-4 mt-3">
+        { games.length && games.map((game) => <GameCard game={game} key={game.id}/>)}
+      </div>
     </div>
   )
 }

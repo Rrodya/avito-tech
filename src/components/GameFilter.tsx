@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {IFilter, IFilterItems} from "../types";
-
+import { log } from "console";
+import { EnumFilter } from "../enums";
 type FilterProps = { filter: IFilterItems, makeFiltration: (selectedFilter: IFilter[]) => void }
 
-enum EnumFilter {
-  category = "Категории",
-  platform = "Платформы",
-  tag = "Теги"
-}
+
 
 export function GameFilter({filter, makeFiltration}: FilterProps) {
   const [isDrop, setDrop] = useState(false);
@@ -15,32 +12,6 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
   const toggleDrop = () => {
     setDrop(!isDrop);
   }
-
-  // const takeFilter = (key: keyof IFilterItems, id: number) => {
-  //   const choosedFilter = filter[key].find(f => f.id === id);
-  //
-  //   if (key === "category") {
-  //     const existingCategoryId = selected.find(item => filter.category.some(category => category.id === item.id));
-  //
-  //     if (existingCategoryId) {
-  //       setSelected(prevSelected =>
-  //         prevSelected.map(item =>
-  //           filter.category.some(category => category.id === item.id) ? choosedFilter! : item
-  //         )
-  //       );
-  //     } else {
-  //       setSelected(prevSelected => [...prevSelected, choosedFilter!]);
-  //     }
-  //   } else {
-  //     if (!selected.some(item => item.id === id)) {
-  //       setSelected(prevSelected => [...prevSelected, choosedFilter!]);
-  //     } else {
-  //       setSelected(prevSelected => prevSelected.filter(item => item.id !== id));
-  //     }
-  //   }
-  //
-  //   makeFiltration(selected);
-  // }
 
   const takeFilter = (key: keyof IFilterItems, id: number) => {
     const foundFilter = filter[key].find(f => f.id === id);
@@ -63,8 +34,20 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
   }
 
   useEffect(() => {
-    makeFiltration(selected);
-  }, [selected]);
+    if(!isDrop) {
+      makeFiltration(selected);
+    } else {
+      if(!selected.length) {
+        console.log("sele");
+        makeFiltration(selected);
+      }
+    }
+  }, [isDrop, selected]);
+
+  const clearSelected = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setSelected([]);
+  }
 
   return (
     <div
@@ -79,10 +62,7 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
 
           {selected.length ? <button
               className="absolute right-0 top-0 transform bg-indigo-700 h-full p-3 flex items-center justify-center text-white font-bold"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelected([]);
-              }}
+              onClick={clearSelected}
           >
               Clear
           </button> : ""}
