@@ -6,6 +6,7 @@ import {GamePage} from "./views/GamePage";
 import {Header} from "./components/Header";
 //TODO сделать 5 минут сохранине информации
 // TODO сортировка
+// TODO дата релиза
 function App() {
   return (
     <>
