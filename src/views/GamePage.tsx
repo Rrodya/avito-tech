@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { IGame } from "../types";
-import { game } from "../data/data";
 import { EnymSystemReq } from "../enums";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Virtual, Pagination, Navigation } from 'swiper';
+import axios from "axios";
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import { Link } from "react-router-dom";
-
-
+import {useGetGameByIdQuery} from "../store/game/gameApi";
 
 export function GamePage() {
   const {id} = useParams();
-  const [same, setSame] = useState<IGame | null>(null);
+
+  const { data: game, isLoading, isError } = useGetGameByIdQuery(Number(id));
 
 
-  useEffect(() => {
-    setSame(game);
-    console.log(game);
-  }, [id]);
 
   return (
     <div className="text-slate-700 mt-2">
       <Link to="/"><span className="text-blue-600">Назад</span></Link>
+      { isLoading && <p className="font-bold text-center mt-3">Loading...</p>}
+      { isError && <p className="font-bold text-center mt-3 text-red-500">Some error</p>}
       {game &&
+
         <div className="mt-3">
           <div className="flex flex-col gap-5 md:flex-row-reverse md:justify-between">
             <div className="relative w-full h-auto md:w-1/2">

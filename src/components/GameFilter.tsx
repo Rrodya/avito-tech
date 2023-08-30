@@ -12,6 +12,9 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
     setDrop(!isDrop);
   }
 
+  //TODO сделать 5 минут сохранине информации
+// TODO сортировка
+
   const takeFilter = (key: keyof IFilterItems, id: number) => {
     const foundFilter = filter[key].find(f => f.id === id);
 
@@ -19,26 +22,19 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
 
     const choosedFilter: IFilter = { ...foundFilter, type: key };
 
-    if (key === 'category' && selected.some(item => item.type === 'category')) {
-      setSelected(prev => [...prev.filter(item => item.type !== 'category'), choosedFilter]);
-      return;
-    }
-
     if (selected.some(item => item.id === choosedFilter.id && item.type === choosedFilter.type)) {
       setSelected(prev => prev.filter(item => item.id !== choosedFilter.id || item.type !== choosedFilter.type));
-      return;
+    } else {
+      setSelected(prev => [...prev, choosedFilter]);
     }
-
-    setSelected(prev => [...prev, choosedFilter]);
   }
 
   useEffect(() => {
-    if(!isDrop) {
+    if (!isDrop) {
       makeFiltration(selected);
     } else {
       if(!selected.length) {
-        console.log("sele");
-        makeFiltration(selected);
+
       }
     }
   }, [isDrop, selected]);

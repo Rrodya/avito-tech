@@ -4,7 +4,8 @@ import {Route, Routes} from "react-router-dom";
 import {HomePage} from "./views/HomePage";
 import {GamePage} from "./views/GamePage";
 import {Header} from "./components/Header";
-
+//TODO сделать 5 минут сохранине информации
+// TODO сортировка
 function App() {
   return (
     <>

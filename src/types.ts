@@ -38,7 +38,6 @@ export interface IFilter {
 export interface IFilterItems {
     category: IFilter[];
     platform: IFilter[];
-    tag: IFilter[];
 }
 
 export type sorting = "release-date" | "popularity" | "alphabetical";

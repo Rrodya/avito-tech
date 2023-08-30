@@ -12,6 +12,7 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.5.0",
+    "cors": "^2.8.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.2",
@@ -22,13 +23,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "serve": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "proxy": "ts-node proxy-server.ts",
-    "serve": "concurrently \"npm run proxy\" \"npm run start\"",
+    "start": "concurrently \"npm run proxy\" \"npm run serve\"",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3000/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -51,6 +53,5 @@
     "@types/swiper": "^6.0.0",
     "concurrently": "^8.2.1",
     "tailwindcss": "^3.3.3"
-  },
-  "proxy": "http://localhost:3001"
+  }
 }
