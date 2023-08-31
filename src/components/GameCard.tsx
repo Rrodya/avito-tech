@@ -10,7 +10,7 @@ export function GameCard({ game }: GameCardProps) {
     <Link to={`/${game.id}`}>
       <div className="w-full bg-slate-300 px-3 py-5 relative">
         <div>
-          <img src={game.thumbnail} alt={game.title} />
+          <img src={game.thumbnail} alt={game.title} className='w-full'/>
         </div>
         <h2 className="text-slate-700 font-bold mt-2">{game.title}</h2>
         <p>Издатель: <i>{game.publisher}</i></p>

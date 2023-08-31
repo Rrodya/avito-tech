@@ -11,3 +11,9 @@ export enum EnymSystemReq {
   graphics = "Видеокарта",
   storage = "Память",
 }
+
+export enum EnumSort {
+  "release-date"="По дате релиза",
+  "popularity"="По полярности",
+  "alphabetical"="По алфовиту"
+}

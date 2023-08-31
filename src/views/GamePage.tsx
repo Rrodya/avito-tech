@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { IGame } from "../types";
 import { EnymSystemReq } from "../enums";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Virtual, Pagination, Navigation } from 'swiper';
-import axios from "axios";
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import { Link } from "react-router-dom";
@@ -15,6 +13,7 @@ export function GamePage() {
   const {id} = useParams();
 
   const { data: game, isLoading, isError } = useGetGameByIdQuery(Number(id));
+
 
 
 
@@ -36,7 +35,7 @@ export function GamePage() {
               <p className="mt-5">Издатель: <span className="italic">{game.publisher}</span></p>
               <p>Разработчик: <span className="italic">{game.developer}</span></p>
               <p>Жанр: <span className="italic">{game.genre}</span></p>
-              <div>
+              {game.minimum_system_requirements && <div>
                 <p className="font-bold">Минимальные системные требования: </p>
                 <ul className="pl-3">
                   {game.minimum_system_requirements && Object.entries(game.minimum_system_requirements).map(([key, value]) => {
@@ -45,7 +44,7 @@ export function GamePage() {
                     )
                   })}    
                 </ul>
-              </div>
+              </div>}
             </div>    
           </div>
           <div className="mt-5">

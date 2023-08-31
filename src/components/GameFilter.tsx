@@ -1,17 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {IFilter, IFilterItems, SortOption} from "../types";
-import { EnumFilter } from "../enums";
+import { EnumFilter, EnumSort } from "../enums";
 type FilterProps = { 
   filter: IFilterItems, 
   makeFiltration: (selectedFilter: IFilter[]) => void,
   sortOption: SortOption | null,
-  setSortOption: React.Dispatch<React.SetStateAction<SortOption | null>>,
-  sort: string[]
+  setSortOption: (sort: SortOption | null) => void,
+  sort: string[],
+  stateFilters: IFilter[],
 }
 
-export function GameFilter({filter, makeFiltration, sortOption, setSortOption, sort}: FilterProps) {
+export function GameFilter({filter, makeFiltration, sortOption, setSortOption, sort, stateFilters}: FilterProps) {
   const [isDrop, setDrop] = useState(false);
-  const [selected, setSelected] = useState<IFilter[]>([]);
+
+  const [selected, setSelected] = useState<IFilter[]>(stateFilters.length ? stateFilters : []);
+
   const toggleDrop = () => {
     setDrop(!isDrop);
   }
@@ -30,16 +33,6 @@ export function GameFilter({filter, makeFiltration, sortOption, setSortOption, s
     }
   }
 
-  useEffect(() => {
-    if (!isDrop) {
-      makeFiltration(selected);
-    } else {
-      if(!selected.length) {
-
-      }
-    }
-  }, [isDrop, selected]);
-
   const clearSelected = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setSelected([]);
@@ -47,11 +40,16 @@ export function GameFilter({filter, makeFiltration, sortOption, setSortOption, s
 
   const handleSortClick = (option: SortOption) => {
     if (sortOption === option) {
-      setSortOption(null);  // Remove sorting if the same option is clicked again
+      setSortOption(null);
     } else {
       setSortOption(option);
     }
   };
+
+  const goSearch = () => {
+    setDrop(false);
+    makeFiltration(selected);
+  }
 
   return (
     <div
@@ -62,16 +60,19 @@ export function GameFilter({filter, makeFiltration, sortOption, setSortOption, s
           className="relative w-full h-[50px] flex items-center px-3 bg-slate-600 flex text-white list-none overflow-hidden whitespace-nowrap"
           onClick={toggleDrop}
         >
-          {selected.length ? selected.map(f => <li key={f.id} className="mr-4">{f.name}</li>) : <p>Filter</p>}
+          {selected.length ? selected.map(f => <li key={f.id} className="mr-4">{f.name}</li>) : <p>Фильтр</p>}
 
           {selected.length ? <button
               className="absolute right-0 top-0 transform bg-indigo-700 h-full p-3 flex items-center justify-center text-white font-bold"
               onClick={clearSelected}
           >
-              Clear
+              Очистить
           </button> : ""}
         </ul>
-        <button className="px-5 bg-indigo-500 h-[50px] text-white">Sort</button>
+        <button 
+          className="px-5 bg-indigo-500 h-[50px] text-white"
+          onClick={goSearch}
+        >Поиск</button>
       </div>
 
       {isDrop &&
@@ -113,19 +114,21 @@ export function GameFilter({filter, makeFiltration, sortOption, setSortOption, s
             ))
           }
         </div>}
-
-        <div className="flex gap-2 mt-4">
-    {sort.map(option => (
-      <button
-        key={option}
-        className={`p-3 hover:bg-slate-500 hover:text-slate-200 transistion-all ${sortOption === option ? 'bg-slate-500 text-slate-200' : ''}`}
-        onClick={() => handleSortClick(option as SortOption)}
-        
-      >
-        {option}
-      </button>
-    ))}
-  </div>
+        <div className="mt-4"> 
+          <p className="font-bold">Сортировка:</p>
+          <div className="flex gap-2">  
+            {sort.map(option => (
+              <button
+                key={option}
+                className={`p-3 hover:bg-slate-500 hover:text-slate-200 transistion-all ${sortOption === option ? 'bg-slate-500 text-slate-200' : ''}`}
+                onClick={() => handleSortClick(option as SortOption)}
+                
+              >
+                {EnumSort[option as keyof typeof sortOption]}
+              </button>
+            ))}
+          </div>
+        </div>
     </div>
   )
 }
