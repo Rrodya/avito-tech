@@ -9,6 +9,7 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import { Link } from "react-router-dom";
 import {useGetGameByIdQuery} from "../store/game/gameApi";
+import { convertToRuFormat } from "../common/methods";
 
 export function GamePage() {
   const {id} = useParams();
@@ -31,7 +32,7 @@ export function GamePage() {
             </div>  
             <div className="md:pt-0" >
               <p className="font-bold text-2lg md:text-xl">{game.title}</p>
-              <p className="italic text-xs mt-2">Дата релиза: {game.release_date}</p>
+              <p className="italic text-xs mt-2">Дата релиза: {convertToRuFormat(game.release_date)}</p>
               <p className="mt-5">Издатель: <span className="italic">{game.publisher}</span></p>
               <p>Разработчик: <span className="italic">{game.developer}</span></p>
               <p>Жанр: <span className="italic">{game.genre}</span></p>

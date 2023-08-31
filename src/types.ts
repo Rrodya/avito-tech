@@ -40,5 +40,4 @@ export interface IFilterItems {
     platform: IFilter[];
 }
 
-export type sorting = "release-date" | "popularity" | "alphabetical";
-
+export type SortOption = "release-date" | "popularity" | "alphabetical";

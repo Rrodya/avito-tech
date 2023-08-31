@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import { GameFilter } from "../components/GameFilter";
-import {filter} from "../initValues";
-import {IFilter, IFilterItems, IGame} from "../types";
+import {filter, sort} from "../initValues";
+import {IFilter, IFilterItems, IGame, SortOption} from "../types";
 import { GameCard } from "../components/GameCard";
-import axios from "axios";
 import {useGetAllGamesQuery} from "../store/game/gameApi";
 
 const filtration: IFilterItems = {
@@ -11,17 +10,28 @@ const filtration: IFilterItems = {
   category: [],
 }
 
+const PAGE_SIZE = 10;
+
 export function HomePage() {
   const [selectedFilter, setSelectedFilter] = React.useState<IFilter[]>([]);
-  const { data: games = [], isLoading, isError } = useGetAllGamesQuery(selectedFilter);
+  const [sortOption, setSortOption] = useState<SortOption | null>(null);
+  const { data: games = [], isLoading, isError } = useGetAllGamesQuery({filters: selectedFilter, sort: sortOption});
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleFilterChange = (filters: IFilter[]) => {
     setSelectedFilter(filters);
   };
+
   return (
     <div className="">
       <h1 className="text-2lg text-slate-600">Список игр</h1>
-      <GameFilter filter={filter} makeFiltration={handleFilterChange}/>
+      <GameFilter 
+        filter={filter} 
+        makeFiltration={handleFilterChange} 
+        sortOption={sortOption} 
+        setSortOption={setSortOption} 
+        sort={sort}  
+      />
       { isLoading && <p className="font-bold text-center mt-3">Loading...</p>}
       { isError && <p className="font-bold text-center mt-3 text-red-500">Some error</p>}
       <div className="grid md:grid-cols-3 gap-4 mt-3">

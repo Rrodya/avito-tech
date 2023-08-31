@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {IFilter, IFilterItems} from "../types";
+import {IFilter, IFilterItems, SortOption} from "../types";
 import { EnumFilter } from "../enums";
-type FilterProps = { filter: IFilterItems, makeFiltration: (selectedFilter: IFilter[]) => void }
+type FilterProps = { 
+  filter: IFilterItems, 
+  makeFiltration: (selectedFilter: IFilter[]) => void,
+  sortOption: SortOption | null,
+  setSortOption: React.Dispatch<React.SetStateAction<SortOption | null>>,
+  sort: string[]
+}
 
-
-
-export function GameFilter({filter, makeFiltration}: FilterProps) {
+export function GameFilter({filter, makeFiltration, sortOption, setSortOption, sort}: FilterProps) {
   const [isDrop, setDrop] = useState(false);
   const [selected, setSelected] = useState<IFilter[]>([]);
   const toggleDrop = () => {
     setDrop(!isDrop);
   }
-
-  //TODO сделать 5 минут сохранине информации
-// TODO сортировка
 
   const takeFilter = (key: keyof IFilterItems, id: number) => {
     const foundFilter = filter[key].find(f => f.id === id);
@@ -43,6 +44,14 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
     e.stopPropagation();
     setSelected([]);
   }
+
+  const handleSortClick = (option: SortOption) => {
+    if (sortOption === option) {
+      setSortOption(null);  // Remove sorting if the same option is clicked again
+    } else {
+      setSortOption(option);
+    }
+  };
 
   return (
     <div
@@ -104,6 +113,19 @@ export function GameFilter({filter, makeFiltration}: FilterProps) {
             ))
           }
         </div>}
+
+        <div className="flex gap-2 mt-4">
+    {sort.map(option => (
+      <button
+        key={option}
+        className={`p-3 hover:bg-slate-500 hover:text-slate-200 transistion-all ${sortOption === option ? 'bg-slate-500 text-slate-200' : ''}`}
+        onClick={() => handleSortClick(option as SortOption)}
+        
+      >
+        {option}
+      </button>
+    ))}
+  </div>
     </div>
   )
 }

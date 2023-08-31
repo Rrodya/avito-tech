@@ -14,23 +14,30 @@ const router = express.Router();
 
 router.get('/games', async (req: any, res: any) => {
     try {
-        const { category, platform  } = req.query;
+        const { category, platform, sort } = req.query;
         let apiUrl = 'https://www.freetogame.com/api/games';
+
+        let params: any = {};
 
         if (category) {
             const tag = category.split(".");
             if (tag.length > 1) {
-              apiUrl = 'https://www.freetogame.com/api/filter';
-              apiUrl += `?tag=${category}`;
+                apiUrl = 'https://www.freetogame.com/api/filter';
+                params = { tag: category };
             } else {
-              apiUrl += `?category=${category}`;
+                params = { category: category };
             }
         }
+
         if (platform) {
-          apiUrl += `${category ? '&' : '?'}platform=${platform}`;
+            params['platform'] = platform;
         }
-        console.log(apiUrl);
-        const response = await axios.get(apiUrl);
+
+        if (sort) {
+            params['sort-by'] = sort;
+        }
+
+        const response = await axios.get(apiUrl, { params });
         res.json(response.data)
 
     } catch (error) {
