@@ -3,6 +3,8 @@
 Особенности
 - Typescript
 - Proxy server(Node js)
+- UI framework: tailwind
+- Файл .env был оставлен из-за удобства при проверки не создавать его и не вводить порт
 
 Для запуска:
 
